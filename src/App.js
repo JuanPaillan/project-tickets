@@ -1,22 +1,36 @@
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import Login from './pages/Login';
-import UsuarioHome from './pages/UsuarioHome';
-import AdminHome from './pages/AdminHome';
-import TicketsUsuarios from './pages/TicketsUsuarios';
-import ProblemasFrecuentes from './pages/ProblemasFrecuentes';
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import Login from "./pages/Login";
+import AdminHome from "./pages/AdminHome";
+import UsuarioHome from "./pages/UsuarioHome";
+import RutaProtegida from "./components/RutaProtegida";
 
 function App() {
   return (
     <Router>
       <Routes>
         <Route path="/" element={<Login />} />
-        <Route path="/usuario" element={<UsuarioHome />} />
-        <Route path="/usuario/tickets" element={<TicketsUsuarios />} />
-        <Route path="/usuario/kb" element={<ProblemasFrecuentes />} />
-        <Route path="/admin" element={<AdminHome />} />
+
+        <Route
+          path="/admin"
+          element={
+            <RutaProtegida rolPermitido="admin">
+              <AdminHome />
+            </RutaProtegida>
+          }
+        />
+
+        <Route
+          path="/usuario"
+          element={
+            <RutaProtegida rolPermitido="empleado">
+              <UsuarioHome />
+            </RutaProtegida>
+          }
+        />
       </Routes>
     </Router>
   );
 }
 
 export default App;
+
