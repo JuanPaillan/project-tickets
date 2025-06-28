@@ -1,0 +1,77 @@
+.admin-home {
+  max-width: 800px;
+  margin: 2rem auto;
+  padding: 2rem;
+  background-color: #fffbe6;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  font-family: 'Segoe UI', sans-serif;
+}
+
+.admin-home h2 {
+  margin-bottom: 2rem;
+  color: #333;
+  text-align: center;
+}
+
+.ticket-list {
+  list-style: none;
+  padding: 0;
+}
+
+.ticket-list li {
+  background-color: white;
+  padding: 1rem;
+  border-radius: 8px;
+  margin-bottom: 1.5rem;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.ticket-list li strong {
+  color: #3f51b5;
+}
+
+.ticket-list li .estado-selector {
+  margin-top: 1rem;
+}
+
+.ticket-list select {
+  padding: 0.5rem;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  font-size: 14px;
+}
+
+.logout-button {
+  float: right;
+  background-color: #e53935;
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: bold;
+  margin-top: -2rem;
+}
+
+.logout-button:hover {
+  background-color: #c62828;
+}
+.filtro-container {
+  margin-bottom: 1.5rem;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.filtro-container label {
+  font-weight: bold;
+  color: #444;
+}
+
+.filtro-container select {
+  padding: 0.5rem;
+  font-size: 14px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+}
