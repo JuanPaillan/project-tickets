@@ -31,6 +31,23 @@ function AdminHome() {
     ? tickets
     : tickets.filter(ticket => ticket.estado === filtroEstado);
 
+  const iconoPorCategoria = (categoria) => {
+    switch (categoria) {
+      case 'Hardware': return '🖨️';
+      case 'Software': return '💾';
+      case 'Red': return '🌐';
+      case 'Correo Electrónico': return '✉️';
+      default: return '❓';
+    }
+  };
+
+  const claseEstado = (estado) => {
+    if (estado === 'Pendiente') return 'pendiente';
+    if (estado === 'En proceso') return 'en-proceso';
+    if (estado === 'Resuelto') return 'resuelto';
+    return '';
+  };
+
   return (
     <div className="admin-home">
       <button className="logout-button" onClick={cerrarSesion}>Cerrar sesión</button>
@@ -51,8 +68,11 @@ function AdminHome() {
       ) : (
         <ul className="ticket-list">
           {ticketsFiltrados.map((ticket) => (
-            <li key={ticket.id}>
-              <strong>{ticket.titulo}</strong>
+            <li key={ticket.id} className={claseEstado(ticket.estado)}>
+              <div className="ticket-encabezado">
+                <span className="ticket-icono">{iconoPorCategoria(ticket.categoria)}</span>
+                <strong>{ticket.titulo}</strong>
+              </div>
               <p>{ticket.descripcion}</p>
               <small>
                 Categoría: {ticket.categoria} | Prioridad: {ticket.prioridad} | Estado actual: <strong>{ticket.estado}</strong>
@@ -77,3 +97,4 @@ function AdminHome() {
 }
 
 export default AdminHome;
+
