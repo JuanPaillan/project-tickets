@@ -1,118 +1,132 @@
 .usuario-home {
-  max-width: 800px;
-  margin: 2rem auto;
+  max-width: 1000px;
+  margin: 0 auto;
   padding: 2rem;
-  background-color: #f8f9fa;
-  border-radius: 12px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
   font-family: 'Segoe UI', sans-serif;
-}
-
-.usuario-home h2 {
-  margin-bottom: 1rem;
-  color: #3f51b5;
-  text-align: center;
-}
-
-.usuario-home h3 {
-  margin-top: 2rem;
   color: #333;
 }
 
-.usuario-home form input,
-.usuario-home form textarea {
-  width: 100%;
-  padding: 0.75rem;
-  margin-bottom: 1rem;
-  border: 1px solid #ccc;
-  border-radius: 6px;
-  font-size: 16px;
+.usuario-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
 }
 
-.usuario-home form button {
+.logout-button {
+  background-color: #f44336;
+  color: white;
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: 6px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.logout-button:hover {
+  background-color: #d32f2f;
+}
+
+.faq-section {
+  background-color: #f5f5f5;
+  padding: 1rem;
+  border-radius: 10px;
+  margin-bottom: 2rem;
+}
+
+.faq-item {
+  margin-bottom: 0.8rem;
+}
+
+.faq-item summary {
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.formulario-section {
+  background-color: #ffffff;
+  border: 1px solid #ddd;
+  padding: 2rem;
+  border-radius: 10px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+  margin-bottom: 2rem;
+}
+
+.ticket-form label {
+  display: block;
+  margin-bottom: 0.5rem;
+  margin-top: 1rem;
+  font-weight: 600;
+}
+
+.ticket-form input,
+.ticket-form textarea,
+.ticket-form select {
+  width: 100%;
+  padding: 0.7rem;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 15px;
+}
+
+.btn-enviar {
+  margin-top: 1.5rem;
   background-color: #3f51b5;
   color: white;
   padding: 0.75rem 1.5rem;
   border: none;
   border-radius: 6px;
-  cursor: pointer;
   font-weight: bold;
-  transition: background-color 0.2s;
+  cursor: pointer;
+  transition: background-color 0.3s;
 }
 
-.usuario-home form button:hover {
+.btn-enviar:hover {
   background-color: #303f9f;
+}
+
+.tickets-section {
+  margin-top: 2rem;
 }
 
 .ticket-list {
   list-style: none;
   padding: 0;
-}
-
-.ticket-list li {
-  background-color: white;
-  padding: 1rem;
-  border-radius: 8px;
-  margin-bottom: 1rem;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
-}
-
-.ticket-list li strong {
-  color: #3f51b5;
-}
-
-.logout-button {
-  float: right;
-  background-color: #e53935;
-  color: white;
-  border: none;
-  padding: 0.5rem 1rem;
-  border-radius: 6px;
-  cursor: pointer;
-  font-weight: bold;
-  margin-top: -2rem;
-}
-
-.logout-button:hover {
-  background-color: #c62828;
-}
-.usuario-home select {
-  width: 100%;
-  padding: 0.75rem;
-  margin-bottom: 1rem;
-  border: 1px solid #ccc;
-  border-radius: 6px;
-  font-size: 16px;
-}
-.usuario-home label {
-  font-weight: bold;
-  display: block;
-  margin-bottom: 0.3rem;
-}
-
-.usuario-home .btn-enviar {
-  background-color: #388e3c;
-  color: white;
-  padding: 0.75rem 1.5rem;
-  border: none;
-  border-radius: 6px;
-  cursor: pointer;
-  font-weight: bold;
   margin-top: 1rem;
 }
 
-.usuario-home .btn-enviar:hover {
-  background-color: #2e7d32;
+.ticket-card {
+  border: 1px solid #ddd;
+  border-left: 6px solid #3f51b5;
+  padding: 1rem;
+  border-radius: 8px;
+  margin-bottom: 1rem;
+  background-color: #fafafa;
+}
+
+.ticket-card.pendiente {
+  border-left-color: #f44336;
+}
+
+.ticket-card.en\\ proceso {
+  border-left-color: #ff9800;
+}
+
+.ticket-card.resuelto {
+  border-left-color: #4caf50;
 }
 
 .ticket-encabezado {
   display: flex;
   align-items: center;
   gap: 0.5rem;
+  font-size: 18px;
   margin-bottom: 0.5rem;
 }
 
 .ticket-icono {
-  font-size: 1.4rem;
+  font-size: 22px;
 }
+
 

@@ -24,19 +24,19 @@ function UsuarioHome() {
   const preguntasFrecuentes = [
     {
       pregunta: "¿La impresora no imprime?",
-      respuesta: "Verifica que esté encendida, conectada al computador y con papel. Reinicia si es necesario.",
+      respuesta: "Asegúrate de que esté conectada, encendida, con papel y tinta. Reinicia si es necesario.",
     },
     {
       pregunta: "¿No tengo internet?",
-      respuesta: "Revisa si otros dispositivos tienen conexión. Intenta reiniciar el router o comunicar al área de redes.",
+      respuesta: "Verifica si otros dispositivos tienen conexión. Intenta reiniciar el router o avisar a soporte.",
     },
     {
       pregunta: "¿No puedo enviar correos?",
-      respuesta: "Asegúrate de tener conexión y revisar si el correo no está bloqueado por peso de archivo. Consulta soporte si persiste.",
+      respuesta: "Comprueba que tienes conexión y que el archivo adjunto no sea demasiado grande.",
     },
     {
-      pregunta: "¿El sistema está lento o se congela?",
-      respuesta: "Cierra programas innecesarios, reinicia el equipo y verifica si hay espacio en disco.",
+      pregunta: "¿El sistema está lento?",
+      respuesta: "Cierra programas innecesarios, reinicia el equipo y verifica el espacio disponible.",
     },
   ];
 
@@ -45,7 +45,6 @@ function UsuarioHome() {
     if (usuario) {
       setCorreoUsuario(usuario.email);
 
-      // Escuchar tickets del usuario logueado en tiempo real
       const q = query(
         collection(db, 'tickets'),
         where('correoUsuario', '==', usuario.email)
@@ -59,7 +58,7 @@ function UsuarioHome() {
         setTickets(docs);
       });
 
-      return () => unsubscribe(); // limpiar listener al salir
+      return () => unsubscribe();
     }
   }, []);
 
@@ -103,82 +102,89 @@ function UsuarioHome() {
 
   return (
     <div className="usuario-home">
-      <button className="logout-button" onClick={cerrarSesion}>Cerrar sesión</button>
-      <h2>Gestión de Soporte Informático</h2>
+      <div className="usuario-header">
+        <h2>Bienvenido</h2>
+        <button className="logout-button" onClick={cerrarSesion}>Cerrar sesión</button>
+      </div>
 
-      <h3>¿Tienes un problema? Revisa esto primero:</h3>
-      <div className="faq-section">
+      <section className="faq-section">
+        <h3>Antes de reportar, revisa:</h3>
         {preguntasFrecuentes.map((faq, index) => (
           <details key={index} className="faq-item">
             <summary>{faq.pregunta}</summary>
             <p>{faq.respuesta}</p>
           </details>
         ))}
-      </div>
+      </section>
 
-      <h3>Crear nuevo ticket</h3>
-      <form onSubmit={manejarEnvio}>
-        <label>Título del problema:</label>
-        <input
-          type="text"
-          placeholder="Ej: No puedo imprimir"
-          value={titulo}
-          onChange={(e) => setTitulo(e.target.value)}
-          required
-        />
+      <section className="formulario-section">
+        <h3>Crear nuevo ticket</h3>
+        <form onSubmit={manejarEnvio} className="ticket-form">
+          <label>Título del problema:</label>
+          <input
+            type="text"
+            placeholder="Ej: No puedo imprimir"
+            value={titulo}
+            onChange={(e) => setTitulo(e.target.value)}
+            required
+          />
 
-        <label>Describe tu problema:</label>
-        <textarea
-          placeholder="Cuéntanos qué está ocurriendo..."
-          value={descripcion}
-          onChange={(e) => setDescripcion(e.target.value)}
-          rows="4"
-          required
-        />
+          <label>Describe tu problema:</label>
+          <textarea
+            placeholder="Explica brevemente lo que ocurre"
+            value={descripcion}
+            onChange={(e) => setDescripcion(e.target.value)}
+            required
+            rows={4}
+          />
 
-        <label>Prioridad:</label>
-        <select value={prioridad} onChange={(e) => setPrioridad(e.target.value)}>
-          <option value="Alta">Alta (problema urgente)</option>
-          <option value="Media">Media (interfiere pero puedo trabajar)</option>
-          <option value="Baja">Baja (no urgente)</option>
-        </select>
+          <label>Prioridad:</label>
+          <select value={prioridad} onChange={(e) => setPrioridad(e.target.value)}>
+            <option value="Alta">Alta (urgente)</option>
+            <option value="Media">Media</option>
+            <option value="Baja">Baja</option>
+          </select>
 
-        <label>Categoría del problema:</label>
-        <select value={categoria} onChange={(e) => setCategoria(e.target.value)}>
-          <option value="Hardware">Hardware – Ej: impresoras, pantallas, cables</option>
-          <option value="Software">Software – Ej: Word, Excel, programas</option>
-          <option value="Red">Red – Ej: sin internet, conexión lenta</option>
-          <option value="Correo Electrónico">Correo – Ej: no llega o no puedo enviar</option>
-          <option value="Otro">Otro – No estoy seguro</option>
-        </select>
+          <label>Categoría del problema:</label>
+          <select value={categoria} onChange={(e) => setCategoria(e.target.value)}>
+            <option value="Hardware">Hardware (impresoras, monitores...)</option>
+            <option value="Software">Software (programas, sistema)</option>
+            <option value="Red">Red (conexión a internet)</option>
+            <option value="Correo Electrónico">Correo electrónico</option>
+            <option value="Otro">Otro</option>
+          </select>
 
-        <button type="submit" className="btn-enviar">Enviar Ticket</button>
-      </form>
+          <button type="submit" className="btn-enviar">Enviar Ticket</button>
+        </form>
+      </section>
 
-      <h3>Mis Tickets</h3>
-      {tickets.length === 0 ? (
-        <p>No has creado tickets aún.</p>
-      ) : (
-        <ul className="ticket-list">
-          {tickets.map((ticket) => (
-            <li key={ticket.id}>
-              <div className="ticket-encabezado">
-                <span className="ticket-icono">{iconoPorCategoria(ticket.categoria)}</span>
-                <strong>{ticket.titulo}</strong>
-              </div>
-              <p>{ticket.descripcion}</p>
-              <small>
-                Categoría: {ticket.categoria} | Prioridad: {ticket.prioridad} | Estado: {ticket.estado}
-              </small>
-            </li>
-          ))}
-        </ul>
-      )}
+      <section className="tickets-section">
+        <h3>Mis Tickets</h3>
+        {tickets.length === 0 ? (
+          <p>No has creado tickets aún.</p>
+        ) : (
+          <ul className="ticket-list">
+            {tickets.map((ticket) => (
+              <li key={ticket.id} className={`ticket-card ${ticket.estado.toLowerCase()}`}>
+                <div className="ticket-encabezado">
+                  <span className="ticket-icono">{iconoPorCategoria(ticket.categoria)}</span>
+                  <strong>{ticket.titulo}</strong>
+                </div>
+                <p>{ticket.descripcion}</p>
+                <small>
+                  Categoría: {ticket.categoria} | Prioridad: {ticket.prioridad} | Estado: {ticket.estado}
+                </small>
+              </li>
+            ))}
+          </ul>
+        )}
+      </section>
     </div>
   );
 }
 
 export default UsuarioHome;
+
 
 
 

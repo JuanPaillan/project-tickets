@@ -8,14 +8,17 @@ function Login() {
   const [usuario, setUsuario] = useState('');
   const [contrasena, setContrasena] = useState('');
   const [error, setError] = useState('');
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError('');
+    setLoading(true);
 
     if (!usuario || !contrasena) {
       setError('Debes ingresar correo y contraseña');
+      setLoading(false);
       return;
     }
 
@@ -39,6 +42,8 @@ function Login() {
         setError('Error al iniciar sesión');
       }
     }
+
+    setLoading(false);
   };
 
   return (
@@ -63,7 +68,9 @@ function Login() {
           value={contrasena}
           onChange={(e) => setContrasena(e.target.value)}
         />
-        <button type="submit">Ingresar</button>
+        <button type="submit" disabled={loading}>
+          {loading ? <span className="spinner" /> : "Ingresar"}
+        </button>
         {error && <p className="login-error">{error}</p>}
       </form>
     </div>
@@ -71,6 +78,9 @@ function Login() {
 }
 
 export default Login;
+
+
+
 
 
 
