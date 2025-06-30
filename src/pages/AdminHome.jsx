@@ -1,6 +1,13 @@
 import './AdminHome.css';
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { db } from '../firebaseConfig';
+import {
+  collection,
+  onSnapshot,
+  updateDoc,
+  doc
+} from 'firebase/firestore';
 
 function AdminHome() {
   const navigate = useNavigate();
@@ -8,18 +15,24 @@ function AdminHome() {
   const [filtroEstado, setFiltroEstado] = useState('Todos');
 
   useEffect(() => {
-    const datos = localStorage.getItem('ticketsUsuario');
-    if (datos) {
-      setTickets(JSON.parse(datos));
-    }
+    const unsubscribe = onSnapshot(collection(db, 'tickets'), (snapshot) => {
+      const datos = snapshot.docs.map((doc) => ({
+        id: doc.id,
+        ...doc.data()
+      }));
+      setTickets(datos);
+    });
+
+    return () => unsubscribe();
   }, []);
 
-  const cambiarEstado = (id, nuevoEstado) => {
-    const ticketsActualizados = tickets.map(ticket =>
-      ticket.id === id ? { ...ticket, estado: nuevoEstado } : ticket
-    );
-    setTickets(ticketsActualizados);
-    localStorage.setItem('ticketsUsuario', JSON.stringify(ticketsActualizados));
+  const cambiarEstado = async (id, nuevoEstado) => {
+    try {
+      const ref = doc(db, 'tickets', id);
+      await updateDoc(ref, { estado: nuevoEstado });
+    } catch (error) {
+      console.error('Error al cambiar estado:', error);
+    }
   };
 
   const cerrarSesion = () => {
@@ -30,6 +43,11 @@ function AdminHome() {
   const ticketsFiltrados = filtroEstado === 'Todos'
     ? tickets
     : tickets.filter(ticket => ticket.estado === filtroEstado);
+
+  const total = tickets.length;
+  const pendientes = tickets.filter(t => t.estado === 'Pendiente').length;
+  const enProceso = tickets.filter(t => t.estado === 'En proceso').length;
+  const resueltos = tickets.filter(t => t.estado === 'Resuelto').length;
 
   const iconoPorCategoria = (categoria) => {
     switch (categoria) {
@@ -53,6 +71,14 @@ function AdminHome() {
       <button className="logout-button" onClick={cerrarSesion}>Cerrar sesión</button>
       <h2>Panel de Administración – Soporte Técnico</h2>
 
+      {/* DASHBOARD DE ESTADÍSTICAS */}
+      <div className="dashboard">
+        <div className="card total">📋 Total: {total}</div>
+        <div className="card pendiente">🕒 Pendientes: {pendientes}</div>
+        <div className="card en-proceso">🔧 En proceso: {enProceso}</div>
+        <div className="card resuelto">✅ Resueltos: {resueltos}</div>
+      </div>
+
       <div className="filtro-container">
         <label>Filtrar por estado: </label>
         <select value={filtroEstado} onChange={(e) => setFiltroEstado(e.target.value)}>
@@ -75,7 +101,8 @@ function AdminHome() {
               </div>
               <p>{ticket.descripcion}</p>
               <small>
-                Categoría: {ticket.categoria} | Prioridad: {ticket.prioridad} | Estado actual: <strong>{ticket.estado}</strong>
+                Usuario: {ticket.correoUsuario}<br />
+                Categoría: {ticket.categoria} | Prioridad: {ticket.prioridad} | Estado actual: {ticket.estado}
               </small>
               <div className="estado-selector">
                 <label>Cambiar estado: </label>
@@ -97,4 +124,6 @@ function AdminHome() {
 }
 
 export default AdminHome;
+
+
 

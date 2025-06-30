@@ -1,8 +1,7 @@
-// src/firebaseConfig.js
 import { initializeApp } from "firebase/app";
 import { getFirestore } from "firebase/firestore";
+import { getAuth } from "firebase/auth";
 
-// Configuración de Firebase (la tuya)
 const firebaseConfig = {
   apiKey: "AIzaSyB4oghrqUVdALa7zpr7iWp0UjKpUuBW8uI",
   authDomain: "tickets-municipalidad-a4c32.firebaseapp.com",
@@ -12,8 +11,12 @@ const firebaseConfig = {
   appId: "1:543911718365:web:f8f765afd5c94c286d5a34"
 };
 
-// Inicializa Firebase y Firestore
+// Inicializar Firebase
 const app = initializeApp(firebaseConfig);
-const db = getFirestore(app);
 
-export { db };
+// Exportar Firestore y Auth
+const db = getFirestore(app);
+const auth = getAuth(app);
+
+export { db, auth };
+

@@ -107,4 +107,38 @@
 .logout-button:hover {
   background-color: #c62828;
 }
+.dashboard {
+  display: flex;
+  gap: 1rem;
+  margin: 1.5rem 0;
+  flex-wrap: wrap;
+}
+
+.card {
+  flex: 1;
+  padding: 1rem;
+  border-radius: 8px;
+  color: white;
+  font-weight: bold;
+  font-size: 1rem;
+  text-align: center;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.card.total {
+  background-color: #546e7a;
+}
+
+.card.pendiente {
+  background-color: #f44336;
+}
+
+.card.en-proceso {
+  background-color: #ff9800;
+}
+
+.card.resuelto {
+  background-color: #4caf50;
+}
+
 

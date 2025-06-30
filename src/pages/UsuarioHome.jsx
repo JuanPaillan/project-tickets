@@ -1,58 +1,25 @@
 import './UsuarioHome.css';
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { auth } from '../firebaseConfig';
+import {
+  collection,
+  addDoc,
+  query,
+  where,
+  onSnapshot,
+  serverTimestamp
+} from 'firebase/firestore';
+import { db } from '../firebaseConfig';
 
 function UsuarioHome() {
   const navigate = useNavigate();
-
   const [titulo, setTitulo] = useState('');
   const [descripcion, setDescripcion] = useState('');
   const [prioridad, setPrioridad] = useState('Media');
   const [categoria, setCategoria] = useState('Hardware');
   const [tickets, setTickets] = useState([]);
-
-  useEffect(() => {
-    const datos = localStorage.getItem('ticketsUsuario');
-    if (datos) {
-      setTickets(JSON.parse(datos));
-    }
-  }, []);
-
-  const manejarEnvio = (e) => {
-    e.preventDefault();
-    const nuevoTicket = {
-      id: Date.now(),
-      titulo,
-      descripcion,
-      prioridad,
-      categoria,
-      estado: 'Pendiente',
-    };
-
-    const nuevosTickets = [...tickets, nuevoTicket];
-    setTickets(nuevosTickets);
-    localStorage.setItem('ticketsUsuario', JSON.stringify(nuevosTickets));
-
-    setTitulo('');
-    setDescripcion('');
-    setPrioridad('Media');
-    setCategoria('Hardware');
-  };
-
-  const cerrarSesion = () => {
-    localStorage.clear();
-    navigate('/');
-  };
-
-  const iconoPorCategoria = (categoria) => {
-    switch (categoria) {
-      case 'Hardware': return '🖨️';
-      case 'Software': return '💾';
-      case 'Red': return '🌐';
-      case 'Correo Electrónico': return '✉️';
-      default: return '❓';
-    }
-  };
+  const [correoUsuario, setCorreoUsuario] = useState('');
 
   const preguntasFrecuentes = [
     {
@@ -72,6 +39,67 @@ function UsuarioHome() {
       respuesta: "Cierra programas innecesarios, reinicia el equipo y verifica si hay espacio en disco.",
     },
   ];
+
+  useEffect(() => {
+    const usuario = auth.currentUser;
+    if (usuario) {
+      setCorreoUsuario(usuario.email);
+
+      // Escuchar tickets del usuario logueado en tiempo real
+      const q = query(
+        collection(db, 'tickets'),
+        where('correoUsuario', '==', usuario.email)
+      );
+
+      const unsubscribe = onSnapshot(q, (querySnapshot) => {
+        const docs = [];
+        querySnapshot.forEach((doc) => {
+          docs.push({ id: doc.id, ...doc.data() });
+        });
+        setTickets(docs);
+      });
+
+      return () => unsubscribe(); // limpiar listener al salir
+    }
+  }, []);
+
+  const manejarEnvio = async (e) => {
+    e.preventDefault();
+
+    try {
+      await addDoc(collection(db, 'tickets'), {
+        titulo,
+        descripcion,
+        prioridad,
+        categoria,
+        estado: 'Pendiente',
+        correoUsuario,
+        fecha: serverTimestamp()
+      });
+
+      setTitulo('');
+      setDescripcion('');
+      setPrioridad('Media');
+      setCategoria('Hardware');
+    } catch (error) {
+      console.error('Error al guardar ticket:', error);
+    }
+  };
+
+  const cerrarSesion = () => {
+    localStorage.clear();
+    navigate('/');
+  };
+
+  const iconoPorCategoria = (categoria) => {
+    switch (categoria) {
+      case 'Hardware': return '🖨️';
+      case 'Software': return '💾';
+      case 'Red': return '🌐';
+      case 'Correo Electrónico': return '✉️';
+      default: return '❓';
+    }
+  };
 
   return (
     <div className="usuario-home">
@@ -151,6 +179,7 @@ function UsuarioHome() {
 }
 
 export default UsuarioHome;
+
 
 
 

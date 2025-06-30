@@ -1,6 +1,8 @@
 import './Login.css';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { signInWithEmailAndPassword } from 'firebase/auth';
+import { auth } from '../firebaseConfig';
 
 function Login() {
   const [usuario, setUsuario] = useState('');
@@ -8,27 +10,34 @@ function Login() {
   const [error, setError] = useState('');
   const navigate = useNavigate();
 
-  const usuariosSimulados = [
-    { usuario: 'admin', password: 'admin123', rol: 'admin' },
-    { usuario: 'empleado', password: 'empleado123', rol: 'empleado' }
-  ];
-
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+    setError('');
 
-    const usuarioEncontrado = usuariosSimulados.find(
-      (u) => u.usuario === usuario && u.password === contrasena
-    );
+    if (!usuario || !contrasena) {
+      setError('Debes ingresar correo y contraseña');
+      return;
+    }
 
-    if (usuarioEncontrado) {
-      localStorage.setItem('rol', usuarioEncontrado.rol);
-      if (usuarioEncontrado.rol === 'admin') {
+    try {
+      const credenciales = await signInWithEmailAndPassword(auth, usuario, contrasena);
+      const correo = credenciales.user.email;
+
+      if (correo === 'juan.admin23@municipalidad.cl') {
+        localStorage.setItem('rol', 'admin');
         navigate('/admin');
       } else {
+        localStorage.setItem('rol', 'empleado');
         navigate('/usuario');
       }
-    } else {
-      setError('Usuario o contraseña incorrectos');
+    } catch (error) {
+      if (error.code === 'auth/user-not-found') {
+        setError('El correo no está registrado');
+      } else if (error.code === 'auth/wrong-password') {
+        setError('Contraseña incorrecta');
+      } else {
+        setError('Error al iniciar sesión');
+      }
     }
   };
 
@@ -43,8 +52,8 @@ function Login() {
       <h2>Iniciar sesión</h2>
       <form className="login-form" onSubmit={handleSubmit}>
         <input
-          type="text"
-          placeholder="Usuario"
+          type="email"
+          placeholder="Correo Municipal"
           value={usuario}
           onChange={(e) => setUsuario(e.target.value)}
         />
@@ -55,12 +64,16 @@ function Login() {
           onChange={(e) => setContrasena(e.target.value)}
         />
         <button type="submit">Ingresar</button>
-        {error && <p style={{ color: 'red' }}>{error}</p>}
+        {error && <p className="login-error">{error}</p>}
       </form>
     </div>
   );
 }
 
 export default Login;
+
+
+
+
 
 
