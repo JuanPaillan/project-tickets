@@ -92,38 +92,50 @@ function AdminHome() {
       {ticketsFiltrados.length === 0 ? (
         <p>No hay tickets en este estado.</p>
       ) : (
-        <ul className="ticket-list">
-          {ticketsFiltrados.map((ticket) => (
-            <li key={ticket.id} className={claseEstado(ticket.estado)}>
-              <div className="ticket-encabezado">
-                <span className="ticket-icono">{iconoPorCategoria(ticket.categoria)}</span>
-                <strong>{ticket.titulo}</strong>
-              </div>
-              <p>{ticket.descripcion}</p>
-              <small>
-                Usuario: {ticket.correoUsuario}<br />
-                Categoría: {ticket.categoria} | Prioridad: {ticket.prioridad} | Estado actual: {ticket.estado}
-              </small>
-              <div className="estado-selector">
-                <label>Cambiar estado: </label>
-                <select
-                  value={ticket.estado}
-                  onChange={(e) => cambiarEstado(ticket.id, e.target.value)}
-                >
-                  <option value="Pendiente">Pendiente</option>
-                  <option value="En proceso">En proceso</option>
-                  <option value="Resuelto">Resuelto</option>
-                </select>
-              </div>
-            </li>
-          ))}
-        </ul>
+        <div className="tabla-tickets">
+          <table>
+            <thead>
+              <tr>
+                <th>Título</th>
+                <th>Descripción</th>
+                <th>Usuario</th>
+                <th>Categoría</th>
+                <th>Prioridad</th>
+                <th>Estado</th>
+                <th>Cambiar estado</th>
+              </tr>
+            </thead>
+            <tbody>
+              {ticketsFiltrados.map((ticket) => (
+                <tr key={ticket.id} className={claseEstado(ticket.estado)}>
+                  <td><strong>{ticket.titulo}</strong></td>
+                  <td>{ticket.descripcion}</td>
+                  <td>{ticket.correoUsuario}</td>
+                  <td>{iconoPorCategoria(ticket.categoria)} {ticket.categoria}</td>
+                  <td>{ticket.prioridad}</td>
+                  <td><strong>{ticket.estado}</strong></td>
+                  <td>
+                    <select
+                      value={ticket.estado}
+                      onChange={(e) => cambiarEstado(ticket.id, e.target.value)}
+                    >
+                      <option value="Pendiente">Pendiente</option>
+                      <option value="En proceso">En proceso</option>
+                      <option value="Resuelto">Resuelto</option>
+                    </select>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
       )}
     </div>
   );
 }
 
 export default AdminHome;
+
 
 
 
