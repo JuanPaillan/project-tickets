@@ -107,15 +107,65 @@ function UsuarioHome() {
         <button className="logout-button" onClick={cerrarSesion}>Cerrar sesión</button>
       </div>
 
-      <section className="faq-section">
-        <h3>Antes de reportar, revisa:</h3>
-        {preguntasFrecuentes.map((faq, index) => (
-          <details key={index} className="faq-item">
-            <summary>{faq.pregunta}</summary>
-            <p>{faq.respuesta}</p>
-          </details>
-        ))}
-      </section>
+          <section className="faq-section">
+      <h3>Problemas Frecuentes</h3>
+
+      <div className="faq-item">
+        <details>
+          <summary>🖨️ La impresora no imprime</summary>
+          <p>Si tu impresora no responde al enviar documentos, sigue estos pasos:</p>
+          <ol>
+            <li><strong>Revisa la conexión eléctrica</strong> y asegúrate de que esté encendida.</li>
+            <li><strong>Comprueba el cable USB</strong> o la conexión Wi-Fi según corresponda.</li>
+            <li><strong>Verifica que haya papel y tinta</strong> o tóner disponible.</li>
+            <li><strong>Abre “Dispositivos e impresoras”</strong> y asegúrate de que la impresora esté predeterminada.</li>
+            <li><strong>Reinicia el equipo</strong> y vuelve a intentarlo.</li>
+          </ol>
+        </details>
+      </div>
+
+      <div className="faq-item">
+        <details>
+          <summary>🌐 No tengo conexión a Internet</summary>
+          <p>Para identificar problemas de red, sigue estos pasos:</p>
+          <ol>
+            <li><strong>Verifica si el cable de red está bien conectado</strong> o si estás conectado a la red Wi-Fi institucional.</li>
+            <li><strong>Confirma si otros equipos también tienen el mismo problema.</strong></li>
+            <li><strong>Reinicia el router</strong> (solo si estás autorizado).</li>
+            <li><strong>Haz clic en el icono de red</strong> en la barra inferior y selecciona “Solucionar problemas”.</li>
+            <li><strong>Contacta a soporte si el ícono tiene una X roja o signo de exclamación amarillo.</strong></li>
+          </ol>
+        </details>
+      </div>
+
+      <div className="faq-item">
+        <details>
+          <summary>✉️ No puedo enviar correos</summary>
+          <p>Si tu correo institucional presenta problemas al enviar mensajes:</p>
+          <ol>
+            <li><strong>Revisa tu conexión a Internet.</strong></li>
+            <li><strong>Evita archivos adjuntos muy pesados</strong> (más de 20 MB pueden bloquear el envío).</li>
+            <li><strong>Cierra y vuelve a abrir el programa o sitio web</strong> de correo.</li>
+            <li><strong>Asegúrate de que estás usando tu cuenta municipal correctamente.</strong></li>
+            <li><strong>Verifica que no tengas mensajes “atascados” en la bandeja de salida.</strong></li>
+          </ol>
+        </details>
+      </div>
+
+      <div className="faq-item">
+        <details>
+          <summary>💾 El computador está lento</summary>
+          <p>Para mejorar el rendimiento de tu equipo:</p>
+          <ol>
+            <li><strong>Cierra los programas que no estés usando.</strong></li>
+            <li><strong>No abras demasiadas pestañas en el navegador.</strong></li>
+            <li><strong>Reinicia tu equipo</strong> si lleva muchas horas encendido.</li>
+            <li><strong>Limpia el escritorio y la carpeta de descargas.</strong></li>
+            <li><strong>Solicita soporte si el problema persiste tras aplicar estos pasos.</strong></li>
+          </ol>
+        </details>
+      </div>
+    </section>
 
       <section className="formulario-section">
         <h3>Crear nuevo ticket</h3>
