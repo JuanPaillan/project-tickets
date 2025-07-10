@@ -13,6 +13,8 @@ function AdminHome() {
   const navigate = useNavigate();
   const [tickets, setTickets] = useState([]);
   const [filtroEstado, setFiltroEstado] = useState('Todos');
+  const [filaActiva, setFilaActiva] = useState(null);
+
 
   useEffect(() => {
     const unsubscribe = onSnapshot(collection(db, 'tickets'), (snapshot) => {
@@ -106,25 +108,49 @@ function AdminHome() {
               </tr>
             </thead>
             <tbody>
-              {ticketsFiltrados.map((ticket) => (
-                <tr key={ticket.id} className={claseEstado(ticket.estado)}>
-                  <td><strong>{ticket.titulo}</strong></td>
-                  <td>{ticket.descripcion}</td>
-                  <td>{ticket.correoUsuario}</td>
-                  <td>{iconoPorCategoria(ticket.categoria)} {ticket.categoria}</td>
-                  <td>{ticket.prioridad}</td>
-                  <td><strong>{ticket.estado}</strong></td>
-                  <td>
-                    <select
-                      value={ticket.estado}
-                      onChange={(e) => cambiarEstado(ticket.id, e.target.value)}
-                    >
-                      <option value="Pendiente">Pendiente</option>
-                      <option value="En proceso">En proceso</option>
-                      <option value="Resuelto">Resuelto</option>
-                    </select>
-                  </td>
-                </tr>
+              {ticketsFiltrados.map((ticket, index) => (
+                <>
+                  <tr
+                    key={ticket.id}
+                    className={claseEstado(ticket.estado)}
+                    onClick={() => setFilaActiva(filaActiva === index ? null : index)}
+                    style={{ cursor: 'pointer' }}
+                  >
+                    <td><strong>{ticket.titulo}</strong></td>
+                    <td>{ticket.descripcion}</td>
+                    <td>{ticket.nombre} {ticket.apellido}</td>
+                    <td>{iconoPorCategoria(ticket.categoria)} {ticket.categoria}</td>
+                    <td>{ticket.prioridad}</td>
+                    <td><strong>{ticket.estado}</strong></td>
+                    <td>
+                      <select
+                        value={ticket.estado}
+                        onClick={(e) => e.stopPropagation()}
+                        onChange={(e) => cambiarEstado(ticket.id, e.target.value)}
+                      >
+                        <option value="Pendiente">Pendiente</option>
+                        <option value="En proceso">En proceso</option>
+                        <option value="Resuelto">Resuelto</option>
+                      </select>
+                    </td>
+                  </tr>
+
+                  {filaActiva === index && (
+                    <tr className="fila-detalle">
+                      <td colSpan="7">
+                        <strong>📅 Fecha de envío:</strong>{' '}
+                        {ticket.fecha?.toDate().toLocaleDateString('es-CL', {
+                          year: 'numeric', month: 'long', day: 'numeric'
+                        })}{' '}
+                        {ticket.fecha?.toDate().toLocaleTimeString('es-CL', {
+                          hour: '2-digit', minute: '2-digit'
+                        })}
+                        <br />
+                        <strong>📧 Correo:</strong> {ticket.correoUsuario}
+                      </td>
+                    </tr>
+                  )}
+                </>
               ))}
             </tbody>
           </table>

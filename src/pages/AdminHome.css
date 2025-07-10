@@ -6,7 +6,7 @@
   background-attachment: fixed;
   font-family: 'Segoe UI', sans-serif;
   padding: 2rem;
-  color: #333;
+  color: #313131;
   position: relative;
 }
 
@@ -139,15 +139,15 @@
 }
 
 .card.total {
-  background-color: #546e7a;
+  background-color: #343434;
 }
 
 .card.pendiente {
-  background-color: #f44336;
+  background-color: #cb1f13;
 }
 
 .card.en-proceso {
-  background-color: #ff9800;
+  background-color: #f59300;
 }
 
 .card.resuelto {
@@ -216,6 +216,14 @@
 .filtro-container label {
   color: white;
   font-weight: bold;
+}
+
+tr.fila-detalle td {
+  background-color: #f9f9f9;
+  font-size: 15px;
+  padding: 1rem;
+  border-top: none;
+  color: #333;
 }
 
 

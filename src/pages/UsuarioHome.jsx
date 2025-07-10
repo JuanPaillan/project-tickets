@@ -5,6 +5,7 @@ import { auth } from '../firebaseConfig';
 import {
   collection,
   addDoc,
+  getDocs,
   query,
   where,
   onSnapshot,
@@ -40,17 +41,29 @@ function UsuarioHome() {
     },
   ];
 
-  useEffect(() => {
+    useEffect(() => {
     const usuario = auth.currentUser;
     if (usuario) {
       setCorreoUsuario(usuario.email);
 
-      const q = query(
+      const obtenerDatosUsuario = async () => {
+        const q = query(collection(db, 'usuarios'), where('correo', '==', usuario.email));
+        const snapshot = await getDocs(q);
+        if (!snapshot.empty) {
+          const datos = snapshot.docs[0].data();
+          localStorage.setItem('nombre', datos.nombre);
+          localStorage.setItem('apellido', datos.apellido);
+        }
+      };
+
+      obtenerDatosUsuario();
+
+      const qTickets = query(
         collection(db, 'tickets'),
         where('correoUsuario', '==', usuario.email)
       );
 
-      const unsubscribe = onSnapshot(q, (querySnapshot) => {
+      const unsubscribe = onSnapshot(qTickets, (querySnapshot) => {
         const docs = [];
         querySnapshot.forEach((doc) => {
           docs.push({ id: doc.id, ...doc.data() });
@@ -61,6 +74,7 @@ function UsuarioHome() {
       return () => unsubscribe();
     }
   }, []);
+
 
   const manejarEnvio = async (e) => {
     e.preventDefault();
@@ -73,8 +87,11 @@ function UsuarioHome() {
         categoria,
         estado: 'Pendiente',
         correoUsuario,
+        nombre: localStorage.getItem('nombre'),
+        apellido: localStorage.getItem('apellido'),
         fecha: serverTimestamp()
       });
+
 
       setTitulo('');
       setDescripcion('');
