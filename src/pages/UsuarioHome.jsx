@@ -109,17 +109,19 @@ function UsuarioHome() {
 
           <section className="faq-section">
       <h3>Problemas Frecuentes</h3>
+      <h4>Antes de enviar tu solicitud revisa esta seccion para que puedas solucionar tus problemas mas frecuentes</h4>
 
       <div className="faq-item">
         <details>
           <summary>🖨️ La impresora no imprime</summary>
           <p>Si tu impresora no responde al enviar documentos, sigue estos pasos:</p>
           <ol>
-            <li><strong>Revisa la conexión eléctrica</strong> y asegúrate de que esté encendida.</li>
+            <li><strong>Verifica que la impresora esté conectada</strong> correctamente a la corriente y encendida.</li>
             <li><strong>Comprueba el cable USB</strong> o la conexión Wi-Fi según corresponda.</li>
             <li><strong>Verifica que haya papel y tinta</strong> o tóner disponible.</li>
-            <li><strong>Abre “Dispositivos e impresoras”</strong> y asegúrate de que la impresora esté predeterminada.</li>
+            <li><strong>Busca en tu equipo “Dispositivos e impresoras”</strong> y asegúrate de que la impresora esté predeterminada.</li>
             <li><strong>Reinicia el equipo</strong> y vuelve a intentarlo.</li>
+            <li><strong>Si el problema persiste,</strong> crea tu ticket y solicita nuestra ayuda.</li>
           </ol>
         </details>
       </div>
@@ -129,11 +131,11 @@ function UsuarioHome() {
           <summary>🌐 No tengo conexión a Internet</summary>
           <p>Para identificar problemas de red, sigue estos pasos:</p>
           <ol>
-            <li><strong>Verifica si el cable de red está bien conectado</strong> o si estás conectado a la red Wi-Fi institucional.</li>
+            <li><strong>Verifica si el cable de red está bien conectado</strong> o si estás conectado a la red Wi-Fi municipal.</li>
             <li><strong>Confirma si otros equipos también tienen el mismo problema.</strong></li>
             <li><strong>Reinicia el router</strong> (solo si estás autorizado).</li>
             <li><strong>Haz clic en el icono de red</strong> en la barra inferior y selecciona “Solucionar problemas”.</li>
-            <li><strong>Contacta a soporte si el ícono tiene una X roja o signo de exclamación amarillo.</strong></li>
+            <li><strong>Si el problema persiste,</strong> crea tu ticket y solicita nuestra ayuda.</li>
           </ol>
         </details>
       </div>
@@ -159,16 +161,16 @@ function UsuarioHome() {
           <ol>
             <li><strong>Cierra los programas que no estés usando.</strong></li>
             <li><strong>No abras demasiadas pestañas en el navegador.</strong></li>
-            <li><strong>Reinicia tu equipo</strong> si lleva muchas horas encendido.</li>
-            <li><strong>Limpia el escritorio y la carpeta de descargas.</strong></li>
-            <li><strong>Solicita soporte si el problema persiste tras aplicar estos pasos.</strong></li>
+            <li><strong>Reinicia tu equipo si lleva mucho tiempo encendido</strong> y guarda todo trabajo que estes realizando.</li>
+            <li><strong>Limpia y/o ordena el escritorio y la carpeta de descargas.</strong></li>
+            <li><strong>Solicita soporte creando tu ticket si el problema persiste tras aplicar estos pasos.</strong></li>
           </ol>
         </details>
       </div>
     </section>
 
       <section className="formulario-section">
-        <h3>Crear nuevo ticket</h3>
+        <h3>Crear Nuevo Ticket</h3>
         <form onSubmit={manejarEnvio} className="ticket-form">
           <label>Título del problema</label>
           <input

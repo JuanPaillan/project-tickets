@@ -22,7 +22,7 @@
   left: 0;
   height: 100%;
   width: 100%;
-  background-color: rgba(0, 0, 50, 0.5); /* filtro oscuro para mejorar legibilidad */
+  background-color: rgba(0, 0, 50, 0.5);
   z-index: 0;
 }
 
@@ -101,7 +101,7 @@
 }
 
 .formulario-section {
-  background-color: rgba(255, 255, 255, 0.93);
+  background-color: rgba(241, 241, 241, 0.93);
   padding: 2rem;
   border-radius: 12px;
   margin-bottom: 2rem;
