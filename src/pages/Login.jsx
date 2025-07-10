@@ -53,7 +53,7 @@ function Login() {
         alt="Logo Municipalidad de Chonchi"
         className="login-logo"
       />
-      <h1 className="login-titulo">Gestión de Ayuda Informática – Municipalidad de Chonchi</h1>
+      <h1 className="login-titulo">Bienvenido/a al Portal de Soporte Informático Municipalidad de Chonchi</h1>
       <h2>Iniciar sesión</h2>
       <form className="login-form" onSubmit={handleSubmit}>
         <input

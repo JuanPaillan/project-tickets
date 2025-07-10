@@ -10,6 +10,11 @@
   position: relative;
 }
 
+.usuario-header h2,
+.tickets-section h3 {
+  color: white;
+}
+
 .usuario-home::before {
   content: "";
   position: absolute;

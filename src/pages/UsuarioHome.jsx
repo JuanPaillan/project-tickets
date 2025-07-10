@@ -103,7 +103,7 @@ function UsuarioHome() {
   return (
     <div className="usuario-home">
       <div className="usuario-header">
-        <h2>Bienvenido</h2>
+        <h2>Bienvenido/a</h2>
         <button className="logout-button" onClick={cerrarSesion}>Cerrar sesión</button>
       </div>
 
@@ -170,7 +170,7 @@ function UsuarioHome() {
       <section className="formulario-section">
         <h3>Crear nuevo ticket</h3>
         <form onSubmit={manejarEnvio} className="ticket-form">
-          <label>Título del problema:</label>
+          <label>Título del problema</label>
           <input
             type="text"
             placeholder="Ej: No puedo imprimir"
@@ -179,7 +179,7 @@ function UsuarioHome() {
             required
           />
 
-          <label>Describe tu problema:</label>
+          <label>Describe tu problema</label>
           <textarea
             placeholder="Explica brevemente lo que ocurre"
             value={descripcion}
@@ -188,14 +188,14 @@ function UsuarioHome() {
             rows={4}
           />
 
-          <label>Prioridad:</label>
+          <label>Prioridad</label>
           <select value={prioridad} onChange={(e) => setPrioridad(e.target.value)}>
             <option value="Alta">Alta (urgente)</option>
             <option value="Media">Media</option>
             <option value="Baja">Baja</option>
           </select>
 
-          <label>Categoría del problema:</label>
+          <label>Categoría del problema</label>
           <select value={categoria} onChange={(e) => setCategoria(e.target.value)}>
             <option value="Hardware">Hardware (impresoras, monitores...)</option>
             <option value="Software">Software (programas, sistema)</option>
