@@ -5,43 +5,49 @@ import { signInWithEmailAndPassword } from 'firebase/auth';
 import { auth } from '../firebaseConfig';
 
 function Login() {
+  //estados para capturar correo, contraseña, errores y carga
   const [usuario, setUsuario] = useState('');
   const [contrasena, setContrasena] = useState('');
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
+  //funcion que se ejecuta al enviar el formulario
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError('');
     setLoading(true);
 
+    //validacion simple que los campos no esten vacios
     if (!usuario || !contrasena) {
       setError('Debes ingresar correo y contraseña');
       setLoading(false);
       return;
     }
 
-    try {
+    try { //firebase auth inicia sesion con correo y contraseña 
       const credenciales = await signInWithEmailAndPassword(auth, usuario, contrasena);
       const correo = credenciales.user.email;
 
+      //asigna el correo como administrador 
       if (correo === 'juan.admin23@municipalidad.cl') {
         localStorage.setItem('rol', 'admin');
-        navigate('/admin');
+        navigate('/admin'); //redirige al home del administrador
       } else {
         localStorage.setItem('rol', 'empleado');
-        navigate('/usuario');
+        navigate('/usuario'); //redirige al home del usuario
       }
-    } catch (error) {
-      if (error.code === 'auth/user-not-found') {
+    } catch (error) { //maneja errores personalizados en firebase auth
+      const code = error.code; 
+      if (code === 'auth/user-not-found') {
         setError('El correo no está registrado');
-      } else if (error.code === 'auth/wrong-password') {
+      } else if (code === 'auth/wrong-password') {
         setError('Contraseña incorrecta');
       } else {
         setError('Error al iniciar sesión');
       }
     }
+
 
     setLoading(false);
   };

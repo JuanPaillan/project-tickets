@@ -1,4 +1,4 @@
-.login-container {
+.login-container { /*contenedor principal del login con el fondo de Chonchi */
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -12,27 +12,27 @@
   position: relative;
 }
 
-.login-container::before {
+.login-container::before { /*fondo oscuro para mejorar contraste */
   content: "";
   position: absolute;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(0, 0, 50, 0.5); /* filtro oscuro */
+  background-color: rgba(0, 0, 50, 0.5); /*filtro oscuro */
   z-index: 0;
 }
 
-.login-logo {
+.login-logo { /*estilo del logo de la municipalidad */
   width: 240px;
   margin-top: 1rem;
   margin-bottom: 2rem;
   z-index: 1;
   position: relative;
-  filter: drop-shadow(2px 2px 6px rgba(0, 0, 0, 0.5));
+  filter: drop-shadow(2px 2px 6px rgba(0, 0, 0, 0.5)); /*sombreado */
 }
 
-.login-titulo {
+.login-titulo { /*titulo principal de bienvenida */
   position: relative;
   z-index: 1;
   color: #ffffff;
@@ -44,7 +44,7 @@
   text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.6);
 }
 
-.login-container h2 {
+.login-container h2 { /*subtitulo de iniciar sesion */
   position: relative;
   z-index: 1;
   color: white;
@@ -53,7 +53,7 @@
   text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.6);
 }
 
-.login-form {
+.login-form { /*contenedor de formulario */
   position: relative;
   z-index: 1;
   background-color: white;
@@ -66,7 +66,7 @@
   flex-direction: column;
 }
 
-.login-form input {
+.login-form input { /*campos de entrada del formulario */
   padding: 0.75rem;
   margin-bottom: 1rem;
   border: 1px solid #ccc;
@@ -75,12 +75,12 @@
   transition: border 0.2s;
 }
 
-.login-form input:focus {
+.login-form input:focus { 
   border-color: #3f51b5;
   outline: none;
 }
 
-.login-form button {
+.login-form button { /*boton de ingreso */
   padding: 0.75rem;
   background-color: #3f51b5;
   color: white;
@@ -98,15 +98,14 @@
   background-color: #303f9f;
 }
 
-.login-error {
+.login-error { /*estilo del mensaje de error */
   margin-top: 0.5rem;
   color: red;
   font-size: 14px;
   text-align: center;
 }
 
-/* Spinner minimalista */
-.spinner {
+.spinner { /*spinner de carga del boton */
   width: 18px;
   height: 18px;
   border: 2px solid #fff;
@@ -117,7 +116,7 @@
   vertical-align: middle;
 }
 
-@keyframes spin {
+@keyframes spin { /*animacion del spinner */
   to {
     transform: rotate(360deg);
   }

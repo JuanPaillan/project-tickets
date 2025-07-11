@@ -22,25 +22,7 @@ function UsuarioHome() {
   const [tickets, setTickets] = useState([]);
   const [correoUsuario, setCorreoUsuario] = useState('');
 
-  const preguntasFrecuentes = [
-    {
-      pregunta: "¿La impresora no imprime?",
-      respuesta: "Asegúrate de que esté conectada, encendida, con papel y tinta. Reinicia si es necesario.",
-    },
-    {
-      pregunta: "¿No tengo internet?",
-      respuesta: "Verifica si otros dispositivos tienen conexión. Intenta reiniciar el router o avisar a soporte.",
-    },
-    {
-      pregunta: "¿No puedo enviar correos?",
-      respuesta: "Comprueba que tienes conexión y que el archivo adjunto no sea demasiado grande.",
-    },
-    {
-      pregunta: "¿El sistema está lento?",
-      respuesta: "Cierra programas innecesarios, reinicia el equipo y verifica el espacio disponible.",
-    },
-  ];
-
+  
     useEffect(() => {
     const usuario = auth.currentUser;
     if (usuario) {
@@ -75,7 +57,7 @@ function UsuarioHome() {
     }
   }, []);
 
-
+  //funcion que maneja el envio del ticket
   const manejarEnvio = async (e) => {
     e.preventDefault();
 
@@ -89,10 +71,10 @@ function UsuarioHome() {
         correoUsuario,
         nombre: localStorage.getItem('nombre'),
         apellido: localStorage.getItem('apellido'),
-        fecha: serverTimestamp()
+        fecha: serverTimestamp() //guarda la fecha del sistema de Firebase
       });
 
-
+      //limpia el formulario tras enviar
       setTitulo('');
       setDescripcion('');
       setPrioridad('Media');

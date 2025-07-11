@@ -11,23 +11,24 @@ import {
 
 function AdminHome() {
   const navigate = useNavigate();
-  const [tickets, setTickets] = useState([]);
-  const [filtroEstado, setFiltroEstado] = useState('Todos');
-  const [filaActiva, setFilaActiva] = useState(null);
+  const [tickets, setTickets] = useState([]); //lista de tickets desde firestore
+  const [filtroEstado, setFiltroEstado] = useState('Todos'); //filtro por estado de ticket
+  const [filaActiva, setFilaActiva] = useState(null); //para expandir detalle de un ticket
 
-
+  //carga tickets en tiempo real al montar el componente 
   useEffect(() => {
     const unsubscribe = onSnapshot(collection(db, 'tickets'), (snapshot) => {
       const datos = snapshot.docs.map((doc) => ({
         id: doc.id,
         ...doc.data()
       }));
-      setTickets(datos);
+      setTickets(datos); //actualiza el estado con los tickets en tiempo real
     });
 
     return () => unsubscribe();
   }, []);
 
+  //cambia el estado de un ticket en firestore
   const cambiarEstado = async (id, nuevoEstado) => {
     try {
       const ref = doc(db, 'tickets', id);
@@ -37,20 +38,24 @@ function AdminHome() {
     }
   };
 
+  //cierra sesion del administrador
   const cerrarSesion = () => {
     localStorage.clear();
     navigate('/');
   };
 
+  //aplica filtro de estado seleccionado por el administrador
   const ticketsFiltrados = filtroEstado === 'Todos'
     ? tickets
     : tickets.filter(ticket => ticket.estado === filtroEstado);
 
+  //contadores para dashboard  
   const total = tickets.length;
   const pendientes = tickets.filter(t => t.estado === 'Pendiente').length;
   const enProceso = tickets.filter(t => t.estado === 'En proceso').length;
   const resueltos = tickets.filter(t => t.estado === 'Resuelto').length;
 
+  //asigna un icono segun la categoria del ticket
   const iconoPorCategoria = (categoria) => {
     switch (categoria) {
       case 'Hardware': return '🖨️';
@@ -61,6 +66,7 @@ function AdminHome() {
     }
   };
 
+  //devuelve la clase CSS para pintar la fila segun estado 
   const claseEstado = (estado) => {
     if (estado === 'Pendiente') return 'pendiente';
     if (estado === 'En proceso') return 'en-proceso';
